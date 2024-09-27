@@ -1,8 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/card";
 import { Switch } from "@/Components/switch";
-import { AlertCircle, Users } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import { PieChart, Pie, Cell } from "recharts";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const Dashboard = () => {
   const recentIssues = [
@@ -10,16 +10,12 @@ const Dashboard = () => {
     { type: "Fixed", description: "XSS vulnerability patched in user profile" },
     { type: "Scan", description: "Full scan completed on payment gateway" },
   ];
-  const progressionData = [
-    { name: "Completed", value: 47 },
-    { name: "Remaining", value: 83 },
-  ];
   const letters = ["V", "P", "S", "M", "L", "X", "D", "A"];
   const radius = 80;
   const centerX = 100;
   const centerY = 100;
   const steps = ["Home", "Products", "Product Details", "Add to Cart", "Checkout"];
-  const [userPosition, setUserPosition] = useState(0);
+  const [userPosition] = useState(0);
   const data = [
     { name: "SQL Injection", value: 60, color: "#8884d8" },
     { name: "XSS", value: 24.5, color: "#82ca9d" },
@@ -46,9 +42,9 @@ const Dashboard = () => {
         </Card>
         <div className="col-span-3 flex flex-col gap-2">
           <div className="flex h-[60%]">
-            <Card className="basis-1/4 text-white w-64">
+            <Card className="bg-gray-800 text-white w-64">
               <CardHeader>
-                <CardTitle className="text-sm font-medium mb-6">Real-Time Fuzzing</CardTitle>
+                <CardTitle className="text-sm font-medium">Real-Time Fuzzing</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="relative h-52">
@@ -79,6 +75,7 @@ const Dashboard = () => {
                   </svg>
                 </div>
 
+<<<<<<< HEAD
                 <div className="mt-4">
                   <div className="  ">
                     <div className="flex items-center">
@@ -93,27 +90,42 @@ const Dashboard = () => {
                     <svg width="80%" height="80%" viewBox="0 0 400 200">
                       <line x1="50" y1="100" x2="350" y2="100" stroke="#4B5563" strokeWidth="2" />
                       {steps.map((_, index) => (
+=======
+                <div className="mt-2">
+                  <div className="flex items-center mb-1">
+                    <img
+                      src="https://avatars.githubusercontent.com/u/140960022?s=400&u=3ba3ead6ee484cf7edc8c5331bd03b063d049e33&v=4"
+                      alt="Senior Pentester"
+                      className="w-8 h-8 rounded-full mr-2"
+                    />
+                    <span className="text-sm">Senior Pentester</span>
+                  </div>
+                  <div className="w-full h-12">
+                    <svg width="100%" height="100%" viewBox="0 0 400 100">
+                      <line x1="25" y1="50" x2="375" y2="50" stroke="#4B5563" strokeWidth="3" />
+                      {steps.map((step, index) => (
+>>>>>>> 1480447 (fixing real time fuzzing card)
                         <g key={index}>
-                          <circle cx={50 + index * 75} cy="100" r="5" fill="#4B5563" />
-                          <text x={50 + index * 75} y="125" textAnchor="middle" fill="#9CA3AF" fontSize="12"></text>
+                          <circle cx={25 + index * 87.5} cy="50" r="7" fill="#4B5563" />
+                          <text x={25 + index * 87.5} y="75" textAnchor="middle" fill="#9CA3AF" fontSize="14"></text>{" "}
                         </g>
                       ))}
-                      <circle cx={50 + userPosition * 75} cy="100" r="10" fill="#3B82F6" />
+                      <circle cx={25 + userPosition * 87.5} cy="50" r="12" fill="#3B82F6" />
                     </svg>
                   </div>
-                  <div className="grid grid-cols-3 gap-2 mt-6 text-xs">
-                    <div>
-                      <div className="font-medium">Request</div>
-                      <div>7.5</div>
-                    </div>
-                    <div>
-                      <div className="font-medium">Uptime</div>
-                      <div>34.7h 23m</div>
-                    </div>
-                    <div>
-                      <div className="font-medium">Vuln Found</div>
-                      <div>17</div>
-                    </div>
+                  <div className="flex justify-between text-xs mt-14">
+                    {[
+                      { label: "Request", value: "7.5" },
+                      { label: "Uptime", value: "34.7h 23m" },
+                      { label: "Vuln Found", value: "17" },
+                    ].map((item, index) => (
+                      <div key={index} className="flex flex-col items-center">
+                        <div className="bg-gray-700 rounded-full w-16 h-16 flex flex-col items-center justify-center mb-1">
+                          <div className="font-medium">{item.value}</div>
+                        </div>
+                        <div>{item.label}</div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </CardContent>
