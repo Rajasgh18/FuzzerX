@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/Components/card";
 import { Switch } from "@/Components/switch";
 import { AlertCircle } from "lucide-react";
 import { PieChart, Pie, Cell } from "recharts";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 const Dashboard = () => {
   const recentIssues = [
@@ -10,6 +10,7 @@ const Dashboard = () => {
     { type: "Fixed", description: "XSS vulnerability patched in user profile" },
     { type: "Scan", description: "Full scan completed on payment gateway" },
   ];
+  const [complexity, setComplexity] = useState<number>(50);
   const letters = ["V", "P", "S", "M", "L", "X", "D", "A"];
   const radius = 80;
   const centerX = 100;
@@ -38,11 +39,36 @@ const Dashboard = () => {
       </Card>
       <div className="flex-grow grid grid-cols-5 gap-x-2">
         <Card className="flex-grow flex flex-col p-2">
-          <button className="w-full bg-[#6E78C4CC] p-2 font-medium rounded-xl text-lg">Dashboard</button>
+          <button className="w-full bg-[#6E78C4CC] p-4 font-bold rounded-xl text-3xl">Dashboard</button>
+          <div className="flex flex-col p-8 gap-y-4 text-2xl">
+            <div>Recent Reports</div>
+            <div>Local Hosts</div>
+            <div>Settings</div>
+          </div>
+          <div className="w-full flex justify-left p-4 font-bold rounded-xl text-3xl">Fuzzing Mode</div>
+          <div className="flex flex-col p-8 gap-y-4 text-2xl">
+            <div>Fuzzing Functionality</div>
+            <div>Filter AI Configs</div>
+            <div>Active Protocols</div>
+          </div>
+          <div>
+            <div className="p-8 text-2xl font-medium mt-8">Activation Control</div>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={complexity}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setComplexity(parseInt(e.target.value))}
+              className="w-full"
+            />
+            <span className="text-sm text-gray-400">{complexity}%</span>
+            <div className="text-lg mt-8 mb-4">AI-driven payload generation and mutation active</div>
+            <span className="flex-shrink-0 rounded-xl bg-gray-600 text-sm text-center font-bold p-2 ">Stealth mode enabled: Evading detection</span>
+          </div>
         </Card>
         <div className="col-span-3 flex flex-col gap-2">
           <div className="flex h-[60%]">
-            <Card className="bg-gray-800 text-white w-64">
+            <Card className="basis-1/4 text-white w-64">
               <CardHeader>
                 <CardTitle className="text-sm font-medium">Real-Time Fuzzing</CardTitle>
               </CardHeader>
@@ -98,9 +124,9 @@ const Dashboard = () => {
                   </div>
                   <div className="flex justify-between text-xs mt-14">
                     {[
-                      { label: "Request", value: "7.5" },
+                      { label: "Request", value: "7.5 K/Sec" },
                       { label: "Uptime", value: "34.7h 23m" },
-                      { label: "Vuln Found", value: "17" },
+                      { label: "Vulns Found", value: "17" },
                     ].map((item, index) => (
                       <div key={index} className="flex flex-col items-center">
                         <div className="bg-gray-700 rounded-full w-16 h-16 flex flex-col items-center justify-center mb-1">
