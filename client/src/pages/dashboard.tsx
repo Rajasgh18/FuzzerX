@@ -1,7 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/card";
 import { Switch } from "@/Components/switch";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Users } from "lucide-react";
 import { PieChart, Pie, Cell } from "recharts";
+import { useState, useEffect } from "react";
 
 const Dashboard = () => {
   const recentIssues = [
@@ -17,6 +18,14 @@ const Dashboard = () => {
   const radius = 80;
   const centerX = 100;
   const centerY = 100;
+  const steps = ["Home", "Products", "Product Details", "Add to Cart", "Checkout"];
+  const [userPosition, setUserPosition] = useState(0);
+  const data = [
+    { name: "SQL Injection", value: 60, color: "#8884d8" },
+    { name: "XSS", value: 24.5, color: "#82ca9d" },
+    { name: "CSRF", value: 15.5, color: "#ffc658" },
+  ];
+
   return (
     <main className="p-2 flex flex-col gap-y-2 h-full">
       <Card className="flex items-center gap-x-5">
@@ -39,11 +48,15 @@ const Dashboard = () => {
           <div className="flex h-[60%]">
             <Card className="basis-1/4 text-white w-64">
               <CardHeader>
-                <CardTitle className="text-sm font-medium">Real-Time Fuzzing</CardTitle>
+                <CardTitle className="text-sm font-medium mb-6">Real-Time Fuzzing</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="relative h-52">
                   <svg viewBox="0 0 200 200" className="w-full h-full">
+                    <circle cx={centerX} cy={centerY} r={radius} fill="none" stroke="#51557A" strokeWidth="1" />
+
+                    <path d="M100,20 A80,80 0 0,1 180,100 M20,100 A80,80 0 0,1 100" fill="none" stroke="white" strokeWidth="2" />
+
                     {letters.map((letter, index) => {
                       const angle = (index / letters.length) * 2 * Math.PI - Math.PI / 2;
                       const x = centerX + radius * Math.cos(angle);
@@ -57,25 +70,38 @@ const Dashboard = () => {
                         </g>
                       );
                     })}
-                    <text x={centerX} y={centerY} textAnchor="middle" dy=".3em" className="text-3xl font-bold">
+                    <text x={centerX} y={centerY} textAnchor="middle" dy=".3em" fill="white" className="text-3xl font-bold">
                       5.2%
                     </text>
-                    <text x={centerX} y={centerY + 20} textAnchor="middle" className="text-xs">
+                    <text x={centerX} y={centerY + 20} textAnchor="middle" fill="white" className="text-xs">
                       Active Scans
                     </text>
                   </svg>
                 </div>
 
                 <div className="mt-4">
-                  <div className="flex items-center mb-2">
-                    <img
-                      src="https://avatars.githubusercontent.com/u/140960022?s=400&u=3ba3ead6ee484cf7edc8c5331bd03b063d049e33&v=4"
-                      alt="Senior Pentester"
-                      className="w-8 h-8 rounded-full mr-2"
-                    />
-                    <span className="text-sm">Senior Pentester</span>
+                  <div className="  ">
+                    <div className="flex items-center">
+                      <img
+                        src="https://avatars.githubusercontent.com/u/140960022?s=400&u=3ba3ead6ee484cf7edc8c5331bd03b063d049e33&v=4"
+                        alt="Senior Pentester"
+                        className="w-10 h-10 rounded-full mr-2"
+                      />
+                      <span className="text-sm ">Senior Pentester</span>
+                    </div>
+
+                    <svg width="80%" height="80%" viewBox="0 0 400 200">
+                      <line x1="50" y1="100" x2="350" y2="100" stroke="#4B5563" strokeWidth="2" />
+                      {steps.map((step, index) => (
+                        <g key={index}>
+                          <circle cx={50 + index * 75} cy="100" r="5" fill="#4B5563" />
+                          <text x={50 + index * 75} y="125" textAnchor="middle" fill="#9CA3AF" fontSize="12"></text>
+                        </g>
+                      ))}
+                      <circle cx={50 + userPosition * 75} cy="100" r="10" fill="#3B82F6" />
+                    </svg>
                   </div>
-                  <div className="grid grid-cols-3 gap-2 text-xs">
+                  <div className="grid grid-cols-3 gap-2 mt-6 text-xs">
                     <div>
                       <div className="font-medium">Request</div>
                       <div>7.5</div>
@@ -92,9 +118,38 @@ const Dashboard = () => {
                 </div>
               </CardContent>
             </Card>
-            <div className="basis-2/4"></div>
-            <Card className="basis-1/4">
-              <h5>Attack Methods</h5>
+            <div className="basis-2/4 flex align-center justify-center">
+              <img src="/Middle.png" alt="" />
+            </div>
+            <Card className="basis-1/4 text-white w-64">
+              <CardHeader>
+                <CardTitle className="text-sm font-medium">Attack Methods</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="relative h-48">
+                  <PieChart className="mt-6 ml-6" width={200} height={200}>
+                    <Pie data={data} cx={100} cy={100} innerRadius={55} outerRadius={90} dataKey="value">
+                      {data.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                  </PieChart>
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                    <div className="text-sm font-bold ml-10 mr-6">80.5%</div>
+                    <div className="text-sm mr-8 ml-10">Detection Rate</div>
+                  </div>
+                </div>
+                <div className="flex justify-between mt-24">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold">551</div>
+                    <div className="text-xs">Payloads Generated</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold">905</div>
+                    <div className="text-xs">Mutations Applied</div>
+                  </div>
+                </div>
+              </CardContent>
             </Card>
           </div>
           <div className="flex h-[40%] gap-x-2">
@@ -102,27 +157,17 @@ const Dashboard = () => {
               <CardHeader>
                 <CardTitle>Progression Modes</CardTitle>
               </CardHeader>
-              <CardContent className="flex justify-center items-center">
-                <PieChart width={200} height={200}>
-                  <Pie data={progressionData} cx={100} cy={100} innerRadius={60} outerRadius={80} fill="#8884d8" paddingAngle={5} dataKey="value">
-                    <Cell key="cell-0" fill="#6366f1" />
-                    <Cell key="cell-1" fill="#1f2937" />
-                  </Pie>
-                </PieChart>
-                <div className="absolute text-center">
-                  <div className="text-3xl font-bold">47/130</div>
-                  <div className="text-sm">Completed Stages</div>
-                </div>
-              </CardContent>
+              <img src="/rainbow.png" alt="" />
             </Card>
             <Card className="basis-1/3">
-              <h5>Map Attack Vectors</h5>
+              <h5 className="mb-4">Map Attack Vectors</h5>
+              <img src="/shark.png" alt="" />
             </Card>
             <Card className=" basis-1/3">
               <CardHeader>
                 <CardTitle>Detection Tracking</CardTitle>
               </CardHeader>
-              <h6 className="text-sm mt-6">vulnerabiility Detection</h6>
+              <h6 className="font-extralight text-sm mt-14">vulnerabiility Detection</h6>
               <CardContent className="mt-6">
                 <div className="space-y-6">
                   <div className="flex items-center">
