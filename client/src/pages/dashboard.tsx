@@ -75,7 +75,6 @@ const Dashboard = () => {
                   </svg>
                 </div>
 
-<<<<<<< HEAD
                 <div className="mt-4">
                   <div className="  ">
                     <div className="flex items-center">
@@ -90,21 +89,6 @@ const Dashboard = () => {
                     <svg width="80%" height="80%" viewBox="0 0 400 200">
                       <line x1="50" y1="100" x2="350" y2="100" stroke="#4B5563" strokeWidth="2" />
                       {steps.map((_, index) => (
-=======
-                <div className="mt-2">
-                  <div className="flex items-center mb-1">
-                    <img
-                      src="https://avatars.githubusercontent.com/u/140960022?s=400&u=3ba3ead6ee484cf7edc8c5331bd03b063d049e33&v=4"
-                      alt="Senior Pentester"
-                      className="w-8 h-8 rounded-full mr-2"
-                    />
-                    <span className="text-sm">Senior Pentester</span>
-                  </div>
-                  <div className="w-full h-12">
-                    <svg width="100%" height="100%" viewBox="0 0 400 100">
-                      <line x1="25" y1="50" x2="375" y2="50" stroke="#4B5563" strokeWidth="3" />
-                      {steps.map((step, index) => (
->>>>>>> 1480447 (fixing real time fuzzing card)
                         <g key={index}>
                           <circle cx={25 + index * 87.5} cy="50" r="7" fill="#4B5563" />
                           <text x={25 + index * 87.5} y="75" textAnchor="middle" fill="#9CA3AF" fontSize="14"></text>{" "}
@@ -131,7 +115,7 @@ const Dashboard = () => {
               </CardContent>
             </Card>
             <div className="basis-2/4 flex align-center justify-center p-4">
-              <img src="/Middle.png" alt="" />
+              <img src="/Middle.png" alt="" className="object-contain"/>
             </div>
             <Card className="basis-1/4 text-white w-64">
               <CardHeader>
