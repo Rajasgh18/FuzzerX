@@ -7,7 +7,7 @@ import ZeroKnowledgeDiscovery from "@/pages/zero-knowledge";
 import PayloadCraftingPage from "@/pages/payload-crafting";
 import CrossLayeredTestingMonitor from "@/pages/cross-layered";
 import ContextualAnalysisPage from "@/pages/contextual-analysis";
-import Navbar from "./Components/navbar"; // Common Navbar
+import Navbar from "./Components/navbar";
 
 const App = () => {
   return (

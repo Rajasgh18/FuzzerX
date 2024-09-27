@@ -5,5 +5,18 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.red-bullet li::marker': {
+          color: 'red',
+        },
+        '.blue-bullet li::marker': {
+          color: 'blue',
+        },
+      }
+      addUtilities(newUtilities)
+    },
+  ],
 }
