@@ -15,6 +15,16 @@ cd client # navigate to client directory
 pnpm install
 ```
 
+### Server-Side Dependencies
+
+Our FastAPI server uses **pipenv** to manage a virtual Python environment. Ensure you use `pipenv` for all package installations and removals.
+
+```bash
+cd server # navigate to server directory
+pipenv shell # Activate the virtual environment
+pipenv install
+```
+
 ### Running the Development Server
 
 Starting the Client
@@ -22,4 +32,11 @@ Starting the Client
 ```bash
 cd client
 pnpm run dev
+```
+
+Starting the Backend
+
+```bash
+cd server
+uvicorn main:app --reload
 ```
