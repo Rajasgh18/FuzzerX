@@ -29,15 +29,15 @@ const Dashboard = () => {
   return (
     <main className="p-2 flex flex-col gap-y-2 h-full">
       <Card className="flex items-center gap-x-5">
-        <h2 className="text-3xl font-bold ml-6 mr-32">Main Overview</h2>
+        <h2 className="text-3xl font-bold ml-6 mr-16">Main Overview</h2>
         <div className="flex items-center gap-x-4">
-          <Switch badgeColor="#D0F3D2" text="Zero-Knowledge Auto-Discovery" />
-          <Switch badgeColor="#903D62" text="Payload Crafting Section" />
-          <Switch badgeColor="#D04E3C" text="Contexual Analysis" />
-          <Switch badgeColor="#D1D6F0" text="Cross-Layered Testing Monitor" />
-          <Switch badgeColor="#8182D3" text="Business Logic Awareness" />
-          <Switch badgeColor="#5580C7" text="API Testing Hub" />
-          <Switch badgeColor="#F5BF7D" text="Attack Simulation Planner" />
+          <Switch path="/zero-knowledge" badgeColor="#D0F3D2" text="Zero-Knowledge Auto-Discovery" />
+          <Switch path="/payload-crafting" badgeColor="#903D62" text="Payload Crafting Section" />
+          <Switch path="/contextual" badgeColor="#D04E3C" text="Contexual Analysis" />
+          <Switch path="/cross-layered" badgeColor="#D1D6F0" text="Cross-Layered Testing Monitor" />
+          <Switch path="/business-logic" badgeColor="#8182D3" text="Business Logic Awareness" />
+          <Switch path="/api-hub" badgeColor="#5580C7" text="API Testing Hub" />
+          <Switch path="/attack-simulation" badgeColor="#F5BF7D" text="Attack Simulation Planner" />
         </div>
       </Card>
       <div className="flex-grow grid grid-cols-5 gap-x-2">
@@ -92,7 +92,7 @@ const Dashboard = () => {
 
                     <svg width="80%" height="80%" viewBox="0 0 400 200">
                       <line x1="50" y1="100" x2="350" y2="100" stroke="#4B5563" strokeWidth="2" />
-                      {steps.map((step, index) => (
+                      {steps.map((_, index) => (
                         <g key={index}>
                           <circle cx={50 + index * 75} cy="100" r="5" fill="#4B5563" />
                           <text x={50 + index * 75} y="125" textAnchor="middle" fill="#9CA3AF" fontSize="12"></text>
@@ -118,7 +118,7 @@ const Dashboard = () => {
                 </div>
               </CardContent>
             </Card>
-            <div className="basis-2/4 flex align-center justify-center">
+            <div className="basis-2/4 flex align-center justify-center p-4">
               <img src="/Middle.png" alt="" />
             </div>
             <Card className="basis-1/4 text-white w-64">
