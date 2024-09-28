@@ -1,9 +1,49 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { Search, RotateCw, AlertTriangle, Check } from 'lucide-react';
 
 const ZeroKnowledgeDiscovery = () => {
     const [isDiscoveryRunning, setIsDiscoveryRunning] = useState(false);
-    const [crawlDepth, setCrawlDepth] = useState(60);
+    const [crawlDepth, setCrawlDepth] = useState(0);
+    const [discoveredEndpoints, setDiscoveredEndpoints] = useState<{
+        url: string;
+        method: string;
+        status: string;
+    }[]>([]);
+
+    const activeSpan = (status: string) => {
+        switch (status) {
+            case 'Active':
+                return 'bg-green-500';
+            case 'Deprecated':
+                return 'bg-red-500';
+            case 'Secure':
+                return 'bg-blue-500';
+        }
+    }
+
+    useEffect(() => {
+        if (isDiscoveryRunning) {
+            const interval = setInterval(() => {
+                setCrawlDepth((prev) => {
+                    if (prev >= 100) {
+                        setIsDiscoveryRunning(false);
+                        clearInterval(interval);
+                        return 100;
+                    }
+                    return prev + 10;
+                });
+
+                setDiscoveredEndpoints((prev) => [...prev, {
+                    url: `/api/endpoint${Math.floor(Math.random() * 100)}`,
+                    method: ['GET', 'POST', 'PUT', 'DELETE'][Math.floor(Math.random() * 4)],
+                    status: ['Active', 'Deprecated', 'Secure'][Math.floor(Math.random() * 3)]
+                }
+                ]);
+            }, 1000);
+
+            return () => clearInterval(interval);
+        }
+    }, [isDiscoveryRunning]);
 
     return (
         <main>
@@ -111,40 +151,21 @@ const ZeroKnowledgeDiscovery = () => {
                             <thead>
                                 <tr className="text-left text-gray-400">
                                     <th className="p-2">Endpoint</th>
-                                    <th className="p-2">Type</th>
+                                    <th className="p-2">Method</th>
                                     <th className="p-2">Protocol</th>
                                     <th className="p-2">Status</th>
-                                    <th className="p-2">Actions</th>
+                                    {/* <th className="p-2">Actions</th> */}
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr className="border-t border-gray-700">
-                                    <td className="p-2">/api/users</td>
-                                    <td className="p-2">API</td>
-                                    <td className="p-2">HTTPS</td>
-                                    <td className="p-2"><span className="bg-green-500 text-green-900 text-xs font-medium px-2 py-1 rounded-full">Active</span></td>
-                                    <td className="p-2">
-                                        <button className="text-blue-400 hover:text-blue-300">Analyze</button>
-                                    </td>
-                                </tr>
-                                <tr className="border-t border-gray-700">
-                                    <td className="p-2">/login</td>
-                                    <td className="p-2">Static</td>
-                                    <td className="p-2">HTTPS</td>
-                                    <td className="p-2"><span className="bg-blue-500 text-blue-900 text-xs font-medium px-2 py-1 rounded-full">Secure</span></td>
-                                    <td className="p-2">
-                                        <button className="text-blue-400 hover:text-blue-300">Analyze</button>
-                                    </td>
-                                </tr>
-                                <tr className="border-t border-gray-700">
-                                    <td className="p-2">/api/products</td>
-                                    <td className="p-2">API</td>
-                                    <td className="p-2">HTTPS</td>
-                                    <td className="p-2"><span className="bg-yellow-500 text-yellow-900 text-xs font-medium px-2 py-1 rounded-full">New</span></td>
-                                    <td className="p-2">
-                                        <button className="text-blue-400 hover:text-blue-300">Analyze</button>
-                                    </td>
-                                </tr>
+                                {discoveredEndpoints.map((endpoint, index) => (
+                                    <tr key={index}>
+                                        <td className='p-2'>{endpoint.url}</td>
+                                        <td className='p-2'>{endpoint.method}</td>
+                                        <td className='p-2'>HTTPS</td>
+                                        <td className='p-2'><span className={`${activeSpan(endpoint.status)} text-white text-xs font-medium px-2 py-1 rounded-lg`}>{endpoint.status}</span></td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>
